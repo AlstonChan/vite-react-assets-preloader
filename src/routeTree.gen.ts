@@ -9,8 +9,20 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as PreloadRouteRouteImport } from './routes/preload/route'
+import { Route as LazyRouteRouteImport } from './routes/lazy/route'
 import { Route as IndexRouteImport } from './routes/index'
 
+const PreloadRouteRoute = PreloadRouteRouteImport.update({
+  id: '/preload',
+  path: '/preload',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LazyRouteRoute = LazyRouteRouteImport.update({
+  id: '/lazy',
+  path: '/lazy',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -19,28 +31,50 @@ const IndexRoute = IndexRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/lazy': typeof LazyRouteRoute
+  '/preload': typeof PreloadRouteRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/lazy': typeof LazyRouteRoute
+  '/preload': typeof PreloadRouteRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/lazy': typeof LazyRouteRoute
+  '/preload': typeof PreloadRouteRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths: '/' | '/lazy' | '/preload'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/' | '/lazy' | '/preload'
+  id: '__root__' | '/' | '/lazy' | '/preload'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  LazyRouteRoute: typeof LazyRouteRoute
+  PreloadRouteRoute: typeof PreloadRouteRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/preload': {
+      id: '/preload'
+      path: '/preload'
+      fullPath: '/preload'
+      preLoaderRoute: typeof PreloadRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/lazy': {
+      id: '/lazy'
+      path: '/lazy'
+      fullPath: '/lazy'
+      preLoaderRoute: typeof LazyRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -53,6 +87,8 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  LazyRouteRoute: LazyRouteRoute,
+  PreloadRouteRoute: PreloadRouteRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

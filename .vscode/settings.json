@@ -12,6 +12,6 @@
     "MD033": false
   },
   "files.associations": {
-    "**/apps/web/src/**/*.css": "tailwindcss"
+    "**/src/**/*.css": "tailwindcss"
   }
 }
