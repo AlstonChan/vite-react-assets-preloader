@@ -14,12 +14,6 @@ interface CacheBustImage {
 }
 
 function RouteComponent() {
-  const [isLoading, setIsLoading] = useState(true);
-  const [loadedImages, setLoadedImages] = useState<Array<CacheBustImage>>([]);
-  const [loadedCount, setLoadedCount] = useState(0);
-
-  const hasInitRef = useRef(false);
-
   const imageUrls: string[] = Object.values(
     import.meta.glob("/src/assets/*.{png,jpg,jpeg,webp}", {
       eager: true,
@@ -27,14 +21,17 @@ function RouteComponent() {
     }),
   );
 
+  const [isLoading, setIsLoading] = useState(imageUrls.length > 0);
+  const [loadedImages, setLoadedImages] = useState<Array<CacheBustImage>>([]);
+  const [loadedCount, setLoadedCount] = useState(0);
+
+  const hasInitRef = useRef(false);
+
   useEffect(() => {
     if (hasInitRef.current) return;
     hasInitRef.current = true;
 
-    if (imageUrls.length === 0) {
-      setIsLoading(false);
-      return;
-    }
+    if (imageUrls.length === 0) return;
 
     const images: Array<CacheBustImage> = [];
 
@@ -74,9 +71,9 @@ function RouteComponent() {
       setLoadedImages(images);
       setTimeout(() => setIsLoading(false), 0);
     });
-  }, []);
+  }, [imageUrls]);
 
-  const loadingProgress = Math.round((loadedCount / imageUrls.length) * 100);
+  const loadingProgress = imageUrls.length > 0 ? Math.round((loadedCount / imageUrls.length) * 100) : 100;
 
   return (
     <div className="relative min-h-screen">
