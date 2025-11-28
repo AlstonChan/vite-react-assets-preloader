@@ -1,75 +1,39 @@
-# React + TypeScript + Vite
+# Vite ReactJs Assets Preloader
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This demo shows if it can preload all the assets (images in this case) before showing the asset to the user.
 
-Currently, two official plugins are available:
+> [!NOTE]
+> All the images shown has a querystring of `?cache-bust={UUID}` to ensure that the images aren't cached so that a refresh of the page can preview the page again without browser caching to disrupt the result.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+The preload page shows that it is possible to actively load all the images, and also paint the images to the DOM synchronously to ensure that when the loading screen is taken away, the user can immediately see the images without any flickering.
 
-## React Compiler
+## Getting Started
 
-The React Compiler is enabled on this template. See [this documentation](https://react.dev/learn/react-compiler) for more information.
+1. Clone the repository to your local machine
 
-Note: This will impact Vite dev & build performances.
+   ```bash
+   git clone https://github.com/AlstonChan/vite-react-assets-preloader.git
+   ```
 
-## Expanding the ESLint configuration
+2. Change directory to the project and install dependencies
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+   ```bash
+   npm i
+   ```
 
-```js
-export default defineConfig([
-  globalIgnores(["dist"]),
-  {
-    files: ["**/*.{ts,tsx}"],
-    extends: [
-      // Other configs...
+3. Run the development server
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+   ```bash
+   npm run dev
+   ```
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ["./tsconfig.node.json", "./tsconfig.app.json"],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-]);
-```
+   The site should be available at <http://localhost:5173>
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Resources
 
-```js
-// eslint.config.js
-import reactX from "eslint-plugin-react-x";
-import reactDom from "eslint-plugin-react-dom";
+- [HTMLImageElement: `decode()` method](https://developer.mozilla.org/en-US/docs/Web/API/HTMLImageElement/decode) - decode the image so it can be rendered immediately after it has been painted to the DOM. Image being loaded from network does not means that painting it to DOM is instant.
+- [HTMLImageElement: `decoding` property](https://developer.mozilla.org/en-US/docs/Web/API/HTMLImageElement/decoding)
 
-export default defineConfig([
-  globalIgnores(["dist"]),
-  {
-    files: ["**/*.{ts,tsx}"],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs["recommended-typescript"],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ["./tsconfig.node.json", "./tsconfig.app.json"],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-]);
-```
+## License
+
+[Apache 2.0](./LICENSE)
