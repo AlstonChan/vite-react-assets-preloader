@@ -1,15 +1,15 @@
-import { Button } from '@/components/ui/button';
-import { createFileRoute, Link } from '@tanstack/react-router';
+import { Button } from "@/components/ui/button";
+import { createFileRoute, Link } from "@tanstack/react-router";
 
-export const Route = createFileRoute('/lazy')({
+export const Route = createFileRoute("/lazy")({
   component: RouteComponent,
 });
 
 function RouteComponent() {
   const images: string[] = Object.values(
-    import.meta.glob('@/assets/*.{jpg,jpeg,png,webp}', {
+    import.meta.glob("@/assets/*.{jpg,jpeg,png,webp}", {
       eager: true,
-      import: 'default',
+      import: "default",
     }),
   );
 

@@ -1,10 +1,10 @@
-import { Button } from '@/components/ui/button';
-import { cn } from '@/lib/utils';
-import { Progress } from '@/components/ui/progress';
-import { createFileRoute, Link } from '@tanstack/react-router';
-import { useState, useEffect, useRef } from 'react';
+import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
+import { Progress } from "@/components/ui/progress";
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { useState, useEffect, useRef } from "react";
 
-export const Route = createFileRoute('/preload')({
+export const Route = createFileRoute("/preload")({
   component: RouteComponent,
 });
 
@@ -21,9 +21,9 @@ function RouteComponent() {
   const hasInitRef = useRef(false);
 
   const imageUrls: string[] = Object.values(
-    import.meta.glob('/src/assets/*.{png,jpg,jpeg,webp}', {
+    import.meta.glob("/src/assets/*.{png,jpg,jpeg,webp}", {
       eager: true,
-      import: 'default',
+      import: "default",
     }),
   );
 
@@ -67,7 +67,7 @@ function RouteComponent() {
 
     Promise.allSettled(imageUrls.map(preloadImage)).then((results) => {
       results.forEach((result) => {
-        if (result.status === 'fulfilled') {
+        if (result.status === "fulfilled") {
           images.push(result.value);
         }
       });
@@ -87,8 +87,8 @@ function RouteComponent() {
       */}
       <div
         className={cn(
-          'fixed inset-0 z-50 flex items-center justify-center bg-background transition-opacity duration-500',
-          isLoading ? 'opacity-100' : 'pointer-events-none opacity-0',
+          "fixed inset-0 z-50 flex items-center justify-center bg-background transition-opacity duration-500",
+          isLoading ? "opacity-100" : "pointer-events-none opacity-0",
         )}
       >
         <div className="w-full max-w-md px-4">

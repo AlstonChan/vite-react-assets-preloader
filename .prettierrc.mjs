@@ -4,11 +4,11 @@
  */
 export default {
   semi: true,
-  trailingComma: 'all',
-  singleQuote: true,
+  trailingComma: "all",
+  singleQuote: false,
   printWidth: 120,
   tabWidth: 2,
-  plugins: ['prettier-plugin-tailwindcss', 'prettier-plugin-classnames', 'prettier-plugin-merge'],
-  tailwindStylesheet: './src/global.css',
-  tailwindFunctions: ['twMerge'],
+  plugins: ["prettier-plugin-tailwindcss", "prettier-plugin-classnames", "prettier-plugin-merge"],
+  tailwindStylesheet: "./src/global.css",
+  tailwindFunctions: ["twMerge"],
 };
